@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import axios from "axios";
 import AddPersonToPhonebook from "./components/AddPersonToPhonebook";
-import Persons from "./components/Persons";
 import Filter from "./components/Filter";
 import FilteredRender from './components/FilteredRender';
+import servicePersons from "./services/servicePersons";
+import PersonRow from './components/PersonRow';
 
 
 const App = () => {
@@ -14,10 +14,10 @@ const App = () => {
     const [ newFilter, setNewFilter] = useState("")
 
     useEffect(() => {
-        axios
-            .get("http://localhost:3001/persons")
-            .then(response => {
-                setPersons(response.data)
+        servicePersons
+            .getAll()
+            .then(initialPersons => {
+                setPersons(initialPersons);
             })
     }, [])
 
@@ -35,7 +35,7 @@ const App = () => {
             </div>
             <h2>Numbers</h2>
             <ul>
-                <Persons persons={persons} />
+                <PersonRow persons={persons} />
             </ul>
         </div>
     )
