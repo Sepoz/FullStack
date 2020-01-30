@@ -1,14 +1,13 @@
 import React from "react";
 
 
-const Filter = ({ persons, newFilter, setNewFilter , personsFiltered, setPersonsFiltered}) => {
+const Filter = ({ persons, newFilter, setNewFilter, setPersonsFiltered}) => {
 
 
     const filterPersons = (event) => {
         event.preventDefault()
 
         const filtered = persons.filter(person => person.name === newFilter)
-
         setPersonsFiltered(filtered)
 
         setNewFilter("")

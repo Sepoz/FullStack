@@ -1,7 +1,7 @@
 import React from "react";
 import servicePersons from "../services/servicePersons";
 
-const AddPersonToPhonebook = ({ persons, newName, newNumber, setPersons, setNewName, setNewNumber }) => {
+const AddPersonToPhonebook = ({ persons, newName, newNumber, setPersons, setNewName, setNewNumber, setConfirmMessage }) => {
     
     const addPerson = (event) => {
         event.preventDefault()
@@ -10,25 +10,26 @@ const AddPersonToPhonebook = ({ persons, newName, newNumber, setPersons, setNewN
             number: newNumber
         }
 
-        servicePersons
-            .create(personObject)
-            .then(initialPersons => {
-                if (persons.some(person => person.name === newName)) {
-                    window.alert(`${newName} is already added to phonebook`)
-                }
-                else if (persons.some(person => person.number === newNumber)) {
-                    window.alert(`${newNumber} is already added to phonebook`)
-                }
-                else {
+        if (persons.some(person => person.name === newName)) {
+            window.alert(`${newName} is already added to phonebook`)
+        } else {
+            servicePersons
+                .create(personObject)
+                .then(initialPersons => {
                     setPersons(persons.concat(initialPersons))
                     setNewName("")
                     setNewNumber("")
-                }
-            })
+                    setConfirmMessage(
+                        `${newName} Added`
+                    )
+                    setTimeout(() => {
+                        setConfirmMessage(null)
+                    }, 2000)
+                })
+        }
     }
 
     const handleNameChange = (event) => {
-        console.log("person id", persons.id)
         setNewName(event.target.value)
     }
     

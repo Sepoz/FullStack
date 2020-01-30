@@ -4,6 +4,7 @@ import Filter from "./components/Filter";
 import FilteredRender from './components/FilteredRender';
 import servicePersons from "./services/servicePersons";
 import PersonRow from './components/PersonRow';
+import Notification from "./components/Notification";
 
 
 const App = () => {
@@ -12,6 +13,7 @@ const App = () => {
     const [ newNumber, setNewNumber] = useState("")
     const [ personsFiltered, setPersonsFiltered ] = useState([])
     const [ newFilter, setNewFilter] = useState("")
+    const [ confirmMessage, setConfirmMessage ] = useState(null)
 
     useEffect(() => {
         servicePersons
@@ -24,6 +26,7 @@ const App = () => {
     return (
         <div>
             <h2>Phonebook</h2>
+            <Notification message={confirmMessage} />
             <div>
                 search for: <Filter persons={persons} newFilter={newFilter} setNewFilter={setNewFilter} setPersonsFiltered={setPersonsFiltered} />
                 <FilteredRender personsFiltered={personsFiltered} />
@@ -31,7 +34,7 @@ const App = () => {
             <br></br>
             <br></br>
             <div>
-                <AddPersonToPhonebook persons={persons} newName={newName} newNumber={newNumber} setPersons={setPersons} setNewName={setNewName} setNewNumber={setNewNumber} />
+                <AddPersonToPhonebook persons={persons} newName={newName} newNumber={newNumber} setPersons={setPersons} setNewName={setNewName} setNewNumber={setNewNumber} setConfirmMessage={setConfirmMessage} />
             </div>
             <h2>Numbers</h2>
             <ul>
